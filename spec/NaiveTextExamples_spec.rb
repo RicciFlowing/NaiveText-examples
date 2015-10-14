@@ -5,7 +5,15 @@ describe NaiveTextExamples do
     expect(NaiveTextExamples::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  describe 'run' do
+    it 'responds to run' do
+      expect(subject).to respond_to(:run)
+    end
   end
+
+  describe 'list' do
+    xit 'returns a list of examples' do
+    end
+  end
+
 end

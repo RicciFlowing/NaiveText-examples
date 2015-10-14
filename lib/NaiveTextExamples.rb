@@ -1,5 +1,14 @@
 require "NaiveTextExamples/version"
+require "NaiveTextExamples/InterestingTexts"
+require "NaiveText"
 
 module NaiveTextExamples
-  # Your code goes here...
+  extend self
+  def run
+
+  end
+
+  def list
+
+  end
 end
