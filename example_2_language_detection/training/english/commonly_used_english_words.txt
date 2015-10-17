@@ -1,4 +1,5 @@
 time  person  year
+is english
 way
 day
 thing
