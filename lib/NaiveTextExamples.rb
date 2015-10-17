@@ -1,5 +1,6 @@
 require "NaiveTextExamples/version"
 require "NaiveTextExamples/InterestingTexts"
+require "NaiveTextExamples/LanguageDetection"
 require "NaiveText"
 
 module NaiveTextExamples
