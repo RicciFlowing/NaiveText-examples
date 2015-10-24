@@ -2,11 +2,15 @@ require "NaiveText"
 
 class LanguageDetector
   def initialize
-    categories_config = [{name: 'german', path: 'training/german'},
-                         {name: 'english', path: 'training/english'},
-                         {name: 'swedish', path: 'training/swedish'},
+    german_examples = ExamplesFactory.from_files('training/german')
+    english_examples = ExamplesFactory.from_files('training/english')
+    swedish_examples = ExamplesFactory.from_files('training/swedish')
+
+    categories_config = [{name: 'german', examples: german_examples },
+                         {name: 'english', examples: swedish_examples},
+                         {name: 'swedish', examples: swedish_examples},
                        ]
-    @classifier = NaiveText.build(categories_config)
+    @classifier = NaiveText.build(categories: categories_config)
   end
 
   def get_language(args)
