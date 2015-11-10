@@ -9,7 +9,7 @@ end
 
 Post.delete_all
 
-positive = ['ruby is the best programming language', 'rails is awesome', 'active record fot the win']
+positive = ['ruby is the best programming language', 'rails is awesome', 'active record for the win']
 positive.each do |text|
   Post.create(text: text, vote: true)
 end
@@ -21,8 +21,8 @@ end
 
 class PostClassifier
   def initialize
-    categories_config = [{name: 'interesting', examples: Post.up_voted.to_a},
-                         {name: 'boring', examples: Post.down_voted.to_a}]
+    categories_config = [{name: 'interesting', examples: Post.up_voted},
+                         {name: 'boring', examples: Post.down_voted}]
     @classifier = NaiveText.build(categories: categories_config)
   end
 

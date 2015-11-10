@@ -1,11 +1,11 @@
 require_relative 'enviroment'
-
+require_relative 'text_creator'
 
 class CreatePostsTable < ActiveRecord::Migration
   def up
     create_table :posts do |t|
       t.string :text
-      t.string :category
+      t.string :content_type
     end
     puts 'ran up method'
   end
