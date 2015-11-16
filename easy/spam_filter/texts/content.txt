@@ -1,0 +1,42 @@
+
+NaiveText Examples Examples
+
+Language Detection
+
+Let's write a simple language detector. It will recognize german and english
+texts. But you can add more languages with ease.
+
+We will need the NaiveText gem, so go ahead ans install it: gem install
+NaiveText We will also need some examples text from both languages. So
+create a directory training with two subdirectories training/german and
+training/english. Now we put some trainings material into those directories.
+Normally some texts will do. But I decided to use a list of commonly used
+words for each language. You can find it together with the code here.
+The above Code does two things: It loads our examples (saved previously). It
+builds a classifier.
+
+To build a simple classifier you only need to specify an array of
+'categories', consisting of a name for the category and some text examples
+as an orientation for the classifier
+
+Next we will write to method to interface the classifier:
+The first function get_language takes an text as a keyword argument and
+returns the corresponding language as specified in our categories array.
+Note that classifier.classify return an catgeory, so you need to call name
+on it to access the language name as a string.
+The second function probabilities also takes an text as a keyword argument
+but it returns an collection of probabilities. You can print it using puts
+(example below).
+
+Now we can use our Language detector:
+
+The full source of the example can be found here.
+
+subscribe via RSS NaiveText
+
+NaiveText
+
+ricciflowing ricciflowing
+
+NaiveText is a text classifier gem written in Ruby and made to be easily
+integratable into your rails app.

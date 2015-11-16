@@ -1,7 +1,7 @@
 require 'NaiveText'
 
 require_relative 'enviroment'
-require_relative 'text_creator'
+require_relative 'post_generator'
 
 class Post < ActiveRecord::Base
   scope :spam, ->{ where(content_type: 'spam') }
@@ -10,47 +10,40 @@ end
 
 
 class SpamFilter
-  def initialize()
+  def initialize(args)
+    @debug_mode = args[:debug_mode] || false
     categories_config = [{name: 'spam', examples: Post.spam, weight: 1},
-                         {name: 'no_spam', examples: Post.no_spam, weight: 1}]
-    @classifier = NaiveText.build(categories: categories_config)
+                         {name: 'no_spam', examples: Post.no_spam, weight: 10}]
+    @classifier = NaiveText.build(categories: categories_config, default: 'no_spam')
   end
 
   def spam?(args)
     post = args[:post]
-    puts post.text
-    puts @classifier.classify(post.text).name
-    puts @classifier.probabilities(post.text)
+    puts_text_and_result(post) if @debug_mode
     @classifier.classify(post.text).name == 'spam'
   end
-end
 
+  private
+    def puts_text_and_result(post)
+      puts post.text
+      puts @classifier.classify(post.text).name
+      puts @classifier.probabilities(post.text)
+    end
+end
 
 
 Post.delete_all
-spam_texts       = File.read('spam.txt')
-verified_content = File.read('content.txt')
 
+PostGenerator.create_posts(content_type: 'spam', path: 'texts/spam.txt', count: 20)
+PostGenerator.create_posts(content_type: 'verified_content', path: 'texts/content.txt', count: 20)
 
+filter = SpamFilter.new(debug_mode: true)
 
-spam_generator    = TextCreator.new(spam_texts)
-content_generator = TextCreator.new(verified_content)
-
-
-spam_generator.create_texts(30).each do |text|
-  Post.create(text: text, content_type: 'spam')
-  puts text
-end
-
-content_generator.create_texts(30).each do |text|
-  Post.create(text: text, content_type: 'verified_content')
-end
-
-filter = SpamFilter.new
-
-test_texts = ["Programming Rails is great pleasure",
-   "This post is about finding a new job. We are looking for honest, responsible, hard-working people",
-    "What happens when?"]
+test_texts = [
+                'Programming in Ruby is a great pleasure',
+                'This post is about finding a new job. We are looking for honest, responsible, hard-working people',
+                'NOT_CONTAINED_IN_ANY_TEXT'
+             ]
 
 test_texts.each do |text|
   post = Post.new(text: text)
