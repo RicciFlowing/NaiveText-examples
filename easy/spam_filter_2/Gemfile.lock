@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    NaiveText (0.5.0)
     actionmailer (4.2.4)
       actionpack (= 4.2.4)
       actionview (= 4.2.4)
@@ -139,6 +140,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  NaiveText
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
